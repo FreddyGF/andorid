@@ -37,9 +37,9 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout2"
         android:layout_width="350dp"
-        style="?attr/textInputFilledStyle"
         android:layout_height="wrap_content"
         android:layout_marginTop="44dp"
+        android:textColorHint="@color/white"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
@@ -50,7 +50,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
-            android:hint="@string/txt_usuario" />
+            android:hint="@string/txt_usuario"
+            android:textColor="@color/white"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.constraintlayout.widget.Guideline
@@ -87,6 +88,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="44dp"
         app:passwordToggleEnabled="true"
+        android:textColorHint="@color/white"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
@@ -97,7 +99,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
-            android:hint="@string/txt_contraseña" />
+            android:hint="@string/txt_contraseña"
+            android:textColor="@color/white"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button

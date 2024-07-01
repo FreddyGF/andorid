@@ -41,8 +41,8 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        editTextEmail = findViewById(R.id.textInputLayout2);
-        editTextPassword = findViewById(R.id.textInputLayout);
+        editTextEmail = findViewById(R.id.editTextEmail);
+        editTextPassword = findViewById(R.id.editTextPassword);
         buttonLogin = findViewById(R.id.Iniciar_sesion);
         btnRegistro = findViewById(R.id.btn_registro);
 

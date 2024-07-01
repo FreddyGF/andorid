@@ -18,6 +18,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.android.material.textfield.TextInputEditText;
 import com.sistemaelite.portatilplus_2.network.MySingleton;
 
 import org.json.JSONException;
@@ -25,7 +26,7 @@ import org.json.JSONObject;
 
 public class RegistroActivity extends AppCompatActivity {
 
-    private EditText editTextNombres, editTextApellidos, editTextEmail, editTextTelefono, editTextPassword, editTextConfirmPassword;
+    private TextInputEditText editTextNombres, editTextApellidos, editTextEmail, editTextTelefono, editTextPassword, editTextConfirmPassword;
     private Button btnInicio, btnCrear;
 
     @Override
@@ -40,12 +41,12 @@ public class RegistroActivity extends AppCompatActivity {
             return insets;
         });
 
-        editTextNombres = findViewById(R.id.textInputLayout3);
-        editTextApellidos = findViewById(R.id.textInputLayout4);
-        editTextEmail = findViewById(R.id.textInputLayout5);
-        editTextTelefono = findViewById(R.id.textInputLayout6);
-        editTextPassword = findViewById(R.id.textInputLayout7);
-        editTextConfirmPassword = findViewById(R.id.textInputLayout8);
+        editTextNombres = findViewById(R.id.editTextNombre);
+        editTextApellidos = findViewById(R.id.editTextApellido);
+        editTextEmail = findViewById(R.id.editTextEmail);
+        editTextTelefono = findViewById(R.id.editTextTelefono);
+        editTextPassword = findViewById(R.id.editTextPassword);
+        editTextConfirmPassword = findViewById(R.id.editTextConfirmPassword);
         btnInicio = findViewById(R.id.btn_inicio);
         btnCrear = findViewById(R.id.btn_crear);
 
