@@ -23,6 +23,7 @@ import com.sistemaelite.portatilplus_2.Fragment.SettingsFragment;
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawerLayout;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,13 +54,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         if (item.getItemId() == R.id.nav_home) {
             // Código para nav_home
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainFragment()).commit();
-        } else if (item.getItemId() == R.id.nav_home) {
+        } else if (item.getItemId() == R.id.nav_settings) {
             // Código para nav_settings
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SettingsFragment()).commit();
-        } else if (item.getItemId() == R.id.nav_settings) {
+        } else if (item.getItemId() == R.id.nav_bookmark) {
             // Código para nav_share
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ReservaFragment()).commit();
-        } else if (item.getItemId() == R.id.nav_bookmark) {
+        } else if (item.getItemId() == R.id.nav_about) {
             // Código para nav_about
         } else if (item.getItemId() == R.id.nav_logout) {
             // Código para nav_logout
@@ -70,13 +71,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    @Override
     public void onBackPressed() {
-        super.onBackPressed();
-    }
-
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-        super.onPointerCaptureChanged(hasCapture);
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 }
