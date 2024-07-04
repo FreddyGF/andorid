@@ -67,12 +67,24 @@ public class MainActivity extends AppCompatActivity {
         String email = editTextEmail.getText().toString();
         String password = editTextPassword.getText().toString();
 
+        // Validar correo
+        if (!isValidEmail(email)) {
+            Toast.makeText(MainActivity.this, "Correo inválido", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Validar longitud de la contraseña
+        if (password.length() < 4) {
+            Toast.makeText(MainActivity.this, "La contraseña debe tener al menos 4 caracteres", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         String url = "https://apiportatilplus.onrender.com/login";
 
         JSONObject postData = new JSONObject();
         try {
-            postData.put("email", email);
-            postData.put("password", password);
+            postData.put("correo", email);
+            postData.put("contrasena", password);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -81,17 +93,17 @@ public class MainActivity extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        try {
-                            boolean success = response.getBoolean("success");
-                            if (success) {
-                                Toast.makeText(MainActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
+
+//                            boolean success = response.getBoolean("success");
+                            if (response.length() > 0) {
+                                Toast.makeText(MainActivity.this, "Exito al iniciar sesión", Toast.LENGTH_SHORT).show();
                                 // Proceed to next activity or save session token
+                                Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                                startActivity(intent);
+                                finish();
                             } else {
-                                Toast.makeText(MainActivity.this, "Login failed!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MainActivity.this, "Sesion fallida", Toast.LENGTH_SHORT).show();
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -102,5 +114,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
         MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
+    }
+
+    // Método para validar el formato del correo electrónico
+    private boolean isValidEmail(String email) {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 }

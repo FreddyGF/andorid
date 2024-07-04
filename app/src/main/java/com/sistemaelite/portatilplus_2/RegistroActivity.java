@@ -68,19 +68,24 @@ public class RegistroActivity extends AppCompatActivity {
     }
 
     private void registerUser() {
-        String nombres = editTextNombres.getText().toString();
-        String apellidos = editTextApellidos.getText().toString();
-        String email = editTextEmail.getText().toString();
-        String telefono = editTextTelefono.getText().toString();
-        String password = editTextPassword.getText().toString();
-        String confirmPassword = editTextConfirmPassword.getText().toString();
+        String nombres = editTextNombres.getText().toString().trim();
+        String apellidos = editTextApellidos.getText().toString().trim();
+        String email = editTextEmail.getText().toString().trim();
+        String telefono = editTextTelefono.getText().toString().trim();
+        String password = editTextPassword.getText().toString().trim();
+        String confirmPassword = editTextConfirmPassword.getText().toString().trim();
 
-        if (!password.equals(confirmPassword)) {
-            Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show();
+        if (nombres.isEmpty() || apellidos.isEmpty() || email.isEmpty() || telefono.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+            Toast.makeText(this, "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        String url = "https://apiportatilplus.onrender.com/register";
+        if (!password.equals(confirmPassword)) {
+            Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String url = "https://apiportatilplus.onrender.com/registro";
 
         JSONObject postData = new JSONObject();
         try {
@@ -98,29 +103,27 @@ public class RegistroActivity extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        try {
-                            boolean success = response.getBoolean("success");
-                            if (success) {
-                                Toast.makeText(RegistroActivity.this, "Registration successful!", Toast.LENGTH_SHORT).show();
-                                // Redirect to login or main activity
+
+//                            boolean success = response.getBoolean("success");
+                            if (response.length() > 0) {
+                                Toast.makeText(RegistroActivity.this, "¡Registro exitoso!", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(RegistroActivity.this, MainActivity.class);
                                 startActivity(intent);
                                 finish();
                             } else {
-                                Toast.makeText(RegistroActivity.this, "Registration failed!", Toast.LENGTH_SHORT).show();
+                                String errorMessage = response.optString("message", "¡Registro fallido!");
+                                Toast.makeText(RegistroActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("Registration Error", error.toString());
-                Toast.makeText(RegistroActivity.this, "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("Registro", "Error de registro: " + error.toString());
+                Toast.makeText(RegistroActivity.this, "Error", Toast.LENGTH_SHORT).show();
             }
         });
 
         MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
     }
+
 }
