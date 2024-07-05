@@ -1,5 +1,7 @@
 package com.sistemaelite.portatilplus_2;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -63,10 +65,23 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         } else if (item.getItemId() == R.id.nav_about) {
             // Código para nav_about
         } else if (item.getItemId() == R.id.nav_logout) {
-            // Código para nav_logout
-            Toast.makeText(this, "Logout!", Toast.LENGTH_SHORT).show();
-        }
+            // Código para cerrar sesion
+            // Obtener el SharedPreferences
+            SharedPreferences preferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
 
+            // Limpiar los datos de sesión
+            editor.clear();
+            editor.apply();
+
+            // Mostrar mensaje de cierre de sesión
+            Toast.makeText(HomeActivity.this, "¡Sesión cerrada exitosamente!", Toast.LENGTH_SHORT).show();
+
+            // Redirigir al usuario a la pantalla de inicio de sesión
+            Intent intent = new Intent(HomeActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
