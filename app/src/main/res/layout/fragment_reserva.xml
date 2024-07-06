@@ -7,17 +7,18 @@
     tools:context=".Fragment.ReservaFragment">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="169dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="139dp"
-        android:layout_marginTop="31dp"
-        android:layout_marginEnd="149dp"
-        android:layout_marginBottom="660dp"
+        android:layout_marginStart="113dp"
+        android:layout_marginTop="37dp"
+        android:layout_marginEnd="113dp"
+        android:layout_marginBottom="654dp"
         android:text="Reservas"
+        android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="30sp" />
 
