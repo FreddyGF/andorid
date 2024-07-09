@@ -13,19 +13,23 @@
             android:title="Home"/>
 
         <item
-            android:id="@+id/nav_settings"
-            android:icon="@drawable/baseline_settings_24"
-            android:title="Settings"/>
+            android:id="@+id/nav_sancion"
+            android:icon="@drawable/santion"
+            android:title="Sanciones"/>
 
         <item
-            android:id="@+id/nav_bookmark"
-            android:icon="@drawable/baseline_collections_bookmark_24"
+            android:id="@+id/nav_reserva"
+            android:icon="@drawable/reser"
             android:title="Reservas"/>
 
         <item
-            android:id="@+id/nav_about"
-            android:icon="@drawable/baseline_info_24"
-            android:title="About Us"/>
+            android:id="@+id/nav_histo"
+            android:icon="@drawable/histo"
+            android:title="Historial"/>
+        <item
+            android:id="@+id/nav_favo"
+            android:icon="@drawable/favo"
+            android:title="Favoritos"/>
     </group>
     <item
         android:title="">
@@ -34,7 +38,7 @@
             <item
                 android:id="@+id/nav_logout"
                 android:icon="@drawable/baseline_output_24"
-                android:title="Logout"/>
+                android:title="Cerrar sesion"/>
         </menu>
 
     </item>

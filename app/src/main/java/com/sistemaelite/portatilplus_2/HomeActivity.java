@@ -18,6 +18,8 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
+import com.sistemaelite.portatilplus_2.Fragment.FavoritosFragment;
+import com.sistemaelite.portatilplus_2.Fragment.HistorialFragment;
 import com.sistemaelite.portatilplus_2.Fragment.MainFragment;
 import com.sistemaelite.portatilplus_2.Fragment.ReservaFragment;
 import com.sistemaelite.portatilplus_2.Fragment.SettingsFragment;
@@ -80,13 +82,16 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         if (id == R.id.nav_home) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainFragment()).commit();
-        } else if (id == R.id.nav_settings) {
+        } else if (id == R.id.nav_sancion) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SettingsFragment()).commit();
-        } else if (id == R.id.nav_bookmark) {
+        } else if (id == R.id.nav_reserva) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ReservaFragment()).commit();
-        } else if (id == R.id.nav_about) {
-            // Código para nav_about
-        } else if (id == R.id.nav_logout) {
+        } else if (id == R.id.nav_histo) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HistorialFragment()).commit();
+        } else if (id == R.id.nav_favo){
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new FavoritosFragment()).commit();
+        }
+        else if (id == R.id.nav_logout) {
             SharedPreferences preferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
             SharedPreferences.Editor editor = preferences.edit();
             editor.clear();
