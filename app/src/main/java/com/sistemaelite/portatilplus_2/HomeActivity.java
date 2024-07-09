@@ -22,7 +22,7 @@ import com.sistemaelite.portatilplus_2.Fragment.FavoritosFragment;
 import com.sistemaelite.portatilplus_2.Fragment.HistorialFragment;
 import com.sistemaelite.portatilplus_2.Fragment.MainFragment;
 import com.sistemaelite.portatilplus_2.Fragment.ReservaFragment;
-import com.sistemaelite.portatilplus_2.Fragment.SettingsFragment;
+import com.sistemaelite.portatilplus_2.Fragment.SancionFragment;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -82,8 +82,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         if (id == R.id.nav_home) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainFragment()).commit();
-        } else if (id == R.id.nav_sancion) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SettingsFragment()).commit();
+        }else if (id == R.id.nav_settings){
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SancionFragment()).commit();
         } else if (id == R.id.nav_reserva) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ReservaFragment()).commit();
         } else if (id == R.id.nav_histo) {

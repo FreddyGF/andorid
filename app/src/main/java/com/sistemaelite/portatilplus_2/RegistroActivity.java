@@ -91,10 +91,11 @@ public class RegistroActivity extends AppCompatActivity {
         try {
             postData.put("nombre", nombres);
             postData.put("apellido", apellidos);
-            postData.put("correo", email);
             postData.put("telefono", telefono);
+            postData.put("correo", email);
             postData.put("contrasena", password);
             postData.put("rol", "usuario");
+            postData.put("estado", "Activo");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -104,7 +105,6 @@ public class RegistroActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
 
-//                            boolean success = response.getBoolean("success");
                             if (response.length() > 0) {
                                 Toast.makeText(RegistroActivity.this, "¡Registro exitoso!", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(RegistroActivity.this, MainActivity.class);
