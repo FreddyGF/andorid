@@ -18,6 +18,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
+import com.sistemaelite.portatilplus_2.Fragment.AccesorioFragment;
 import com.sistemaelite.portatilplus_2.Fragment.FavoritosFragment;
 import com.sistemaelite.portatilplus_2.Fragment.HistorialFragment;
 import com.sistemaelite.portatilplus_2.Fragment.MainFragment;
@@ -90,8 +91,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HistorialFragment()).commit();
         } else if (id == R.id.nav_favo){
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new FavoritosFragment()).commit();
-        }
-        else if (id == R.id.nav_logout) {
+        } else if (id == R.id.nav_acce){
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AccesorioFragment()).commit();
+        } else if (id == R.id.nav_logout) {
             SharedPreferences preferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
             SharedPreferences.Editor editor = preferences.edit();
             editor.clear();

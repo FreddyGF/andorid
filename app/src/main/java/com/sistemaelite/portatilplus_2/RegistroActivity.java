@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -75,17 +74,37 @@ public class RegistroActivity extends AppCompatActivity {
         String password = editTextPassword.getText().toString().trim();
         String confirmPassword = editTextConfirmPassword.getText().toString().trim();
 
+        // Validar si los campos están vacíos
         if (nombres.isEmpty() || apellidos.isEmpty() || email.isEmpty() || telefono.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
             Toast.makeText(this, "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show();
             return;
         }
 
+        // Validar formato del correo electrónico
+        if (!isValidEmail(email)) {
+            Toast.makeText(this, "Correo inválido", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Validar longitud del teléfono
+        if (telefono.length() < 10) {
+            Toast.makeText(this, "El teléfono debe tener al menos 10 dígitos", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Validar longitud de la contraseña
+        if (password.length() < 4) {
+            Toast.makeText(this, "La contraseña debe tener al menos 4 caracteres", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Validar que las contraseñas coinciden
         if (!password.equals(confirmPassword)) {
             Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        String url = "https://apiportatilplus.onrender.com/registro";
+        String url = "https://portatilplusapi.onrender.com/registro";
 
         JSONObject postData = new JSONObject();
         try {
@@ -104,16 +123,15 @@ public class RegistroActivity extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-
-                            if (response.length() > 0) {
-                                Toast.makeText(RegistroActivity.this, "¡Registro exitoso!", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(RegistroActivity.this, MainActivity.class);
-                                startActivity(intent);
-                                finish();
-                            } else {
-                                String errorMessage = response.optString("message", "¡Registro fallido!");
-                                Toast.makeText(RegistroActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
-                            }
+                        if (response.length() > 0) {
+                            Toast.makeText(RegistroActivity.this, "¡Registro exitoso!", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(RegistroActivity.this, MainActivity.class);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            String errorMessage = response.optString("message", "¡Registro fallido!");
+                            Toast.makeText(RegistroActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -126,4 +144,8 @@ public class RegistroActivity extends AppCompatActivity {
         MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
     }
 
+    // Método para validar el formato del correo electrónico
+    private boolean isValidEmail(String email) {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    }
 }

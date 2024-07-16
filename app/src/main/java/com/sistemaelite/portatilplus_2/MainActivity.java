@@ -64,10 +64,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loginUser() {
-        String email = editTextEmail.getText().toString();
-        String password = editTextPassword.getText().toString();
+        String email = editTextEmail.getText().toString().trim();
+        String password = editTextPassword.getText().toString().trim();
 
-        // Validar correo
+        // Validar si los campos están vacíos
+        if (email.isEmpty()) {
+            Toast.makeText(MainActivity.this, "El campo de correo electrónico no puede estar vacío", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (password.isEmpty()) {
+            Toast.makeText(MainActivity.this, "El campo de contraseña no puede estar vacío", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Validar formato del correo
         if (!isValidEmail(email)) {
             Toast.makeText(MainActivity.this, "Correo inválido", Toast.LENGTH_SHORT).show();
             return;
@@ -79,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        String url = "https://apiportatilplus.onrender.com/login";
+        String url = "https://portatilplusapi.onrender.com/login";
 
         JSONObject postData = new JSONObject();
         try {
@@ -93,17 +104,14 @@ public class MainActivity extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-
-//                            boolean success = response.getBoolean("success");
-                            if (response.length() > 0) {
-                                Toast.makeText(MainActivity.this, "Exito al iniciar sesión", Toast.LENGTH_SHORT).show();
-                                // Proceed to next activity or save session token
-                                Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-                                startActivity(intent);
-                                finish();
-                            } else {
-                                Toast.makeText(MainActivity.this, "Sesion fallida", Toast.LENGTH_SHORT).show();
-                            }
+                        if (response.length() > 0) {
+                            Toast.makeText(MainActivity.this, "Exito al iniciar sesión", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            Toast.makeText(MainActivity.this, "Sesion fallida", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }, new Response.ErrorListener() {
             @Override

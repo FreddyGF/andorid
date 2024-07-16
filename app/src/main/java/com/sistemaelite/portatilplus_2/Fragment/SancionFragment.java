@@ -8,22 +8,33 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
 import com.sistemaelite.portatilplus_2.R;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 
 public class SancionFragment extends Fragment {
 
     private static final int PERMISSION_REQUEST_CODE = 100;
+    private static final String TAG = "SancionFragment";
+    private static final String ENDPOINT = "https://portatilplusapi.onrender.com/admin/sancion";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -36,9 +47,9 @@ public class SancionFragment extends Fragment {
                 if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
                         != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(getActivity(),
-                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
+                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
                 } else {
-                    createPdf();
+                    fetchDataAndCreatePdf();
                 }
             }
         });
@@ -46,9 +57,32 @@ public class SancionFragment extends Fragment {
         return view;
     }
 
-    private void createPdf() {
+    private void fetchDataAndCreatePdf() {
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, ENDPOINT,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        createPdf(response);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getContext(), "Error al obtener datos: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e(TAG, "Volley error: ", error);
+            }
+        });
+
+        queue.add(stringRequest);
+    }
+
+    private void createPdf(String content) {
         String pdfPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).toString();
-        File file = new File(pdfPath, "sanciones.pdf");
+        File dir = new File(pdfPath);
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+        File file = new File(dir, "sanciones.pdf");
 
         try {
             PdfWriter writer = new PdfWriter(file);
@@ -56,13 +90,13 @@ public class SancionFragment extends Fragment {
             Document document = new Document(pdfDocument);
 
             document.add(new Paragraph("Sanciones"));
-            document.add(new Paragraph("Aquí puedes añadir más contenido según tus necesidades."));
+            document.add(new Paragraph(content));
 
             document.close();
-            Toast.makeText(getContext(), "PDF generado correctamente", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "PDF generado correctamente en " + file.getAbsolutePath(), Toast.LENGTH_SHORT).show();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            Toast.makeText(getContext(), "Error al generar el PDF", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Error al generar el PDF: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -70,7 +104,7 @@ public class SancionFragment extends Fragment {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == PERMISSION_REQUEST_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                createPdf();
+                fetchDataAndCreatePdf();
             } else {
                 Toast.makeText(getContext(), "Permiso denegado", Toast.LENGTH_SHORT).show();
             }

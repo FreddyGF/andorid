@@ -1,18 +1,17 @@
 package com.sistemaelite.portatilplus_2.Fragment;
 
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -20,14 +19,11 @@ import com.android.volley.toolbox.Volley;
 import com.sistemaelite.portatilplus_2.R;
 import com.sistemaelite.portatilplus_2.network.Computer;
 import com.sistemaelite.portatilplus_2.network.ComputerAdapter;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class ReservaFragment extends Fragment {
 
@@ -44,13 +40,16 @@ public class ReservaFragment extends Fragment {
         adapter = new ComputerAdapter(computers);
         recyclerView.setAdapter(adapter);
 
+        Button navigateButton = view.findViewById(R.id.reseraqui);
+        navigateButton.setOnClickListener(v -> navigateToRegistroservaFragment());
+
         fetchComputers();
 
         return view;
     }
 
     private void fetchComputers() {
-        String url = "https://apiportatilplus.onrender.com/admin/computador";
+        String url = "https://portatilplusapi.onrender.com/admin/computador";
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null,
                 response -> {
@@ -79,5 +78,13 @@ public class ReservaFragment extends Fragment {
         // Asumiendo que tienes una instancia de RequestQueue llamada requestQueue
         RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
         requestQueue.add(jsonObjectRequest);
+    }
+
+    private void navigateToRegistroservaFragment() {
+        Fragment registroservaFragment = new RegistroservaFragment();
+        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, registroservaFragment);
+        transaction.addToBackStack(null);  // Esto añade la transacción al back stack, permitiendo al usuario navegar de vuelta
+        transaction.commit();
     }
 }

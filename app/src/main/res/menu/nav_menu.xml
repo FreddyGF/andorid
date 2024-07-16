@@ -26,10 +26,17 @@
             android:id="@+id/nav_histo"
             android:icon="@drawable/histo"
             android:title="Historial"/>
+
         <item
             android:id="@+id/nav_favo"
             android:icon="@drawable/favo"
             android:title="Favoritos"/>
+
+        <item
+            android:id="@+id/nav_acce"
+            android:icon="@drawable/reser"
+            android:title="Accesorios"/>
+
     </group>
     <item
         android:title="">

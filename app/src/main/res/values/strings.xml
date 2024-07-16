@@ -36,10 +36,14 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <!--  reserva  -->
-    <string name="compu">Computadora estándar para uso general
-    Procesador: Intel Core i5 o equivalente
-    Memoria RAM: 8 GB DDR4
-    Uso previsto: Tareas cotidianas, navegación web, ofimática.</string>
+    <string name="compu">Registro de rervacion</string>
+    <string name="lbl_nombre">Ingrese su Nombre</string>
+    <string name="lbl_ace">Ingrese el id del acesorio</string>
+    <string name="lbl_compu">Ingrese el id del computador</string>
+    <string name="lbl_fec">Ingrese la fecha</string>
+    <string name="btn_confi">Comfirmar Reserva</string>
+    <string name="btn_aqui">!Reserva Aqui¡</string>
+
 
     <!--  home  -->
     <string name="info">Terminos y condiciones
