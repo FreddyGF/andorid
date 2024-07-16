@@ -57,8 +57,9 @@ public class AccesorioFragment extends Fragment {
                     public void onResponse(JSONObject response) {
                         try {
                             JSONArray bodyArray = response.getJSONArray("body");
-                            for (int i = 0; i < bodyArray.length(); i++) {
-                                JSONObject accesorioObject = bodyArray.getJSONObject(i);
+                            JSONArray accesoriosArray = bodyArray.getJSONArray(0); // Obtén el primer elemento del array body
+                            for (int i = 0; i < accesoriosArray.length(); i++) {
+                                JSONObject accesorioObject = accesoriosArray.getJSONObject(i);
                                 Accesorio accesorio = new Accesorio();
                                 accesorio.setIdAccesorio(accesorioObject.getInt("id_accesorio"));
                                 accesorio.setNumeroAccesorio(accesorioObject.getInt("numero_accesorio"));
@@ -81,7 +82,6 @@ public class AccesorioFragment extends Fragment {
                     }
                 });
 
-        // Asumiendo que tienes una instancia de RequestQueue llamada requestQueue
         RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
         requestQueue.add(jsonObjectRequest);
     }
